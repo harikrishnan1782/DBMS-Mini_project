@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Horizon</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand" href="#">Horizon <span style="color: var(--ios-text-secondary); font-weight: 400;">Admin</span></a>
+            <div class="ms-auto">
+                <a class="btn btn-sm btn-outline-danger rounded-pill px-3" href="/admin/logout">Sign Out</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid px-4" style="padding-top: 100px;">
+        <div class="d-flex justify-content-between align-items-end mb-5">
+            <div>
+                <h2 class="mb-1">Dashboard</h2>
+                <p class="text-white-50 mb-0">Overview of operations and revenue.</p>
+            </div>
+            <div class="text-end">
+                <span class="badge bg-white text-dark rounded-pill px-3 py-2">Live Status: Online</span>
+            </div>
+        </div>
+
+        <div class="row g-4 mb-5">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-label">TOTAL REVENUE</div>
+                    <div class="stat-value">$<%= stats.total_revenue.toLocaleString() %></div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-label">BOOKINGS</div>
+                    <div class="stat-value"><%= stats.total_bookings %></div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-label">PASSENGERS</div>
+                    <div class="stat-value"><%= stats.total_customers %></div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-label">FLIGHTS</div>
+                    <div class="stat-value"><%= stats.total_flights %></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="glass-panel h-100">
+                    <h5 class="mb-4">Revenue Trend</h5>
+                    <canvas id="revenueChart" height="120"></canvas>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="glass-panel h-100">
+                    <h5 class="mb-4">Recent Activity</h5>
+                    <div class="d-flex flex-column gap-3">
+                        <% recentBookings.forEach(booking => { %>
+                            <div class="p-3 rounded-4" style="background: rgba(255,255,255,0.03);">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span class="fw-bold text-white"><%= booking.customer_name %></span>
+                                    <span class="text-success fw-bold">$<%= booking.total_amount %></span>
+                                </div>
+                                <div class="d-flex justify-content-between text-white-50 small">
+                                    <span><%= booking.source_city %> ➝ <%= booking.dest_city %></span>
+                                    <span><%= new Date(booking.booking_date).toLocaleDateString() %></span>
+                                </div>
+                            </div>
+                        <% }); %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const ctx = document.getElementById('revenueChart').getContext('2d');
+        const monthlyData = <%- JSON.stringify(monthlyRevenue) %>;
+        const months = monthlyData.map(d => d.month).reverse();
+        const revenue = monthlyData.map(d => d.revenue).reverse();
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: months,
+                datasets: [{
+                    label: 'Revenue',
+                    data: revenue,
+                    borderColor: '#2997ff',
+                    backgroundColor: 'rgba(41, 151, 255, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointRadius: 0,
+                    pointHoverRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { display: false }, ticks: { color: '#888' } },
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#888' } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

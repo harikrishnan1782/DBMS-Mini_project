@@ -1,0 +1,200 @@
+/* public/css/style.css */
+
+:root {
+    --ios-bg: #000000;
+    --ios-glass: rgba(22, 22, 22, 0.6);
+    --ios-glass-border: rgba(255, 255, 255, 0.08);
+    --ios-blue: #2997ff; /* Apple Blue */
+    --ios-green: #30d158; /* Apple Green */
+    --ios-red: #ff453a;   /* Apple Red */
+    --ios-text: #f5f5f7;
+    --ios-text-secondary: #86868b;
+    --radius-l: 28px;
+    --radius-m: 18px;
+    --radius-s: 12px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    background-color: var(--ios-bg);
+    color: var(--ios-text);
+    /* Subtle deep space gradient background */
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(41, 151, 255, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(255, 69, 58, 0.1) 0%, transparent 40%);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* --- NAVIGATION (Floating Pill) --- */
+.navbar {
+    background: rgba(20, 20, 20, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--ios-glass-border);
+    padding: 15px 0;
+}
+
+.navbar-brand {
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    font-size: 1.2rem;
+    color: white !important;
+}
+
+/* --- GLASS PANELS (The Core UI) --- */
+.glass-panel {
+    background: var(--ios-glass);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid var(--ios-glass-border);
+    border-radius: var(--radius-l);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 30px;
+    overflow: hidden;
+}
+
+.glass-panel:hover {
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* --- FORM ELEMENTS (Clean Inputs) --- */
+.form-control, .form-select {
+    background: rgba(255, 255, 255, 0.05);
+    border: none;
+    border-radius: var(--radius-s);
+    color: white !important;
+    padding: 12px 16px;
+    font-size: 1rem;
+    transition: background 0.2s;
+}
+
+.form-control:focus, .form-select:focus {
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: none;
+    outline: 2px solid var(--ios-blue);
+}
+
+.form-label {
+    color: var(--ios-text-secondary);
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* --- BUTTONS (Apple Style) --- */
+.btn-primary {
+    background: var(--ios-blue);
+    border: none;
+    border-radius: 100px; /* Pill shape */
+    padding: 12px 24px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    background: #409cff;
+    transform: scale(1.02);
+}
+
+.btn-danger {
+    background: var(--ios-red);
+    border: none;
+    border-radius: 100px;
+}
+
+.btn-space {
+    background: white;
+    color: black;
+    border-radius: 100px;
+    font-weight: 600;
+    padding: 12px 30px;
+    border: none;
+}
+
+.btn-space:hover {
+    background: #f0f0f0;
+    transform: scale(1.05);
+}
+
+/* --- DASHBOARD STATS --- */
+.stat-card {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: var(--radius-m);
+    padding: 24px;
+    border: 1px solid var(--ios-glass-border);
+}
+
+.stat-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -1px;
+    background: linear-gradient(135deg, #fff 0%, #a5a5a5 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.stat-label {
+    color: var(--ios-text-secondary);
+    font-weight: 500;
+}
+
+/* --- TABLES --- */
+.table-glass {
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--ios-text);
+}
+.table-glass th {
+    font-weight: 500;
+    color: var(--ios-text-secondary);
+    border-bottom: 1px solid var(--ios-glass-border);
+    padding: 20px;
+}
+.table-glass td {
+    padding: 20px;
+    border-bottom: 1px solid var(--ios-glass-border);
+    vertical-align: middle;
+}
+
+/* --- BADGES --- */
+.badge-confirmed {
+    background: rgba(48, 209, 88, 0.15);
+    color: var(--ios-green);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+.badge-cancelled {
+    background: rgba(255, 69, 58, 0.15);
+    color: var(--ios-red);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* --- TYPOGRAPHY --- */
+h1, h2, h3, h4 {
+    letter-spacing: -0.5px;
+    font-weight: 700;
+}
+.display-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    background: linear-gradient(180deg, #FFFFFF 0%, #888888 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
